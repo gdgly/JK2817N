@@ -39,6 +39,7 @@ uint8_t Avg_Set_Num(Disp_Coordinates_Typedef *Coordinates);//平均数设置
 Sort_TypeDef Disp_Set_InputNum(Disp_Coordinates_Typedef *Coordinates);
 void Set_daot(uint8_t *buff,uint8_t dot);
 Sort_TypeDef Disp_Set_InputpreNum(Disp_Coordinates_Typedef *Coordinates);
+Sort_TypeDef Disp_Set_InputpreSecNum(Disp_Coordinates_Typedef *Coordinates);
 void Set_Compbcd_float(void);
 uint8_t Test_Comp(All_Compvalue_Typedef *pt);
 void Soft_Turnon(void);

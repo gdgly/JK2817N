@@ -21,6 +21,7 @@ const char *PASSWORD="12345789";
 uint8_t  Avg_Test_Main[25][6];
 uint8_t  Avg_Test_Second[25][6];
 uint8_t  Avg_Count=0;
+u8 primcomp,scedcomp;
 const uint8_t Disp_Unit1[]={'p','n','u','m',' ','k','M'};
 const uint8_t Uart_Ordel[]={0x60,0x70,0x71,0x80,0x90,0xa0,0xb0,0xc0,0xe0};
 const uint8_t READDATA[7]={0xAB,0x01,0x06,0x03,0x08,0xbf,'\0'};
@@ -585,7 +586,7 @@ void Test_Process(void)
 			Disp_Big_MainUnit(Test_Dispvalue.Unit[0],DISP_UnitMain[SaveData.Main_Func.Param.test]);//œ‘ æµ•Œª
 //			Test_Dispvalue.Secondvalue.Dot=3;
 			Disp_Big_SecondUnit(Test_Dispvalue.Unit[1],DISP_UnitSecond[SaveData.Main_Func.Param.test]);//∏±≤Œ ˝µ•Œª
-			Disp_Testvalue();			//œ‘ æ≤‚¡ø÷µ
+			
 			
 		
             //∑÷—°±»Ωœ¥Úø™
@@ -612,6 +613,7 @@ void Test_Process(void)
             
             
             }
+			Disp_Testvalue();			//œ‘ æ≤‚¡ø÷µ
             if(TrigFlag==1)
                 TrigFlag=2;
         
@@ -3049,11 +3051,14 @@ void Use_LimitSetProcess(void)
 //						else
 						//if(Button_Page.index)
 						{
-							if(Button_Page.index>15)
+							if(Button_Page.index>5&Button_Page.index<16)
+								Button_Page.index+=10;
+							else if(Button_Page.index > 15){
 								Button_Page.index-=9;
-							else
+							}else{
 								//if(Button_Page.index<)
 								Button_Page.index+=1;
+							}
 						}
 					
 					
@@ -3069,6 +3074,8 @@ void Use_LimitSetProcess(void)
 						
 					if(Button_Page.index>0)
 						Button_Page.index--;
+					else if(Button_Page.index==0)
+						Button_Page.index=15;
 				break;
 				case Key_DOWN:
 					
@@ -3112,7 +3119,7 @@ void Use_LimitSetProcess(void)
 							Coordinates.ypos=FIRSTLINE-2;
 							Coordinates.lenth=66;
 							SaveData.Limit_Tab.Nom=Disp_Set_InputNum(&Coordinates);
-					}else if(Button_Page.index>5&&Button_Page.index<=15)
+					}else if(Button_Page.index>5&&Button_Page.index<=14)
 						{
 							//LIST2-90, 76+(i-6)*15
 							Coordinates.xpos=LIST2-90;//FIRSTLINE+SPACE1+3+ (i-2)*16
@@ -3121,12 +3128,25 @@ void Use_LimitSetProcess(void)
 							SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].low=Disp_Set_InputpreNum(&Coordinates);
 							SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].high=SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].low;
 							//Sort_TypeDef Disp_Set_InputpreNum(Disp_Coordinates_Typedef *Coordinates)
-						}else if(Button_Page.index>15)
+						}else if(Button_Page.index>15 && Button_Page.index<25)
 						{
 							Coordinates.xpos=LIST2+70;//FIRSTLINE+SPACE1+3+ (i-2)*16
 							Coordinates.ypos=76+(Button_Page.index-16)*15;
 							Coordinates.lenth=60;
 							SaveData.Limit_Tab.Comp_Value[Button_Page.index-16].high=Disp_Set_InputpreNum(&Coordinates);
+						}else if(Button_Page.index==15)
+						{
+							Coordinates.xpos=LIST2-90;//FIRSTLINE+SPACE1+3+ (i-2)*16
+							Coordinates.ypos=76+(Button_Page.index-6)*15;
+							Coordinates.lenth=60;
+							SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].low=Disp_Set_InputpreSecNum(&Coordinates);							
+							SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].high=SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].low;
+						}else if(Button_Page.index==25)
+						{
+							Coordinates.xpos=LIST2+70;//FIRSTLINE+SPACE1+3+ (i-2)*16
+							Coordinates.ypos=76+(Button_Page.index-16)*15;
+							Coordinates.lenth=60;
+							SaveData.Limit_Tab.Comp_Value[Button_Page.index-16].high=Disp_Set_InputpreSecNum(&Coordinates);
 						}
 						do{
 							key=HW_KeyScsn();
@@ -4820,7 +4840,10 @@ Sort_TypeDef Input_compvalue(Disp_Coordinates_Typedef *Coordinates)
 						//Sort_set.Num=	conp_value *unit_c/pow(10,dot);
 						Sort_set.Num=conp_value;
 						Sort_set.Dot=dot;
-						Sort_set.Unit=3;
+						if(page==0)
+							Sort_set.Unit=3;
+//						else
+//							Sort_set.Unit=9;	
 						While_flag=0;
 						}
 					break;
@@ -5541,6 +5564,26 @@ Sort_TypeDef Disp_Set_InputpreNum(Disp_Coordinates_Typedef *Coordinates)
 
 }
 
+Sort_TypeDef Disp_Set_InputpreSecNum(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num1;
+	Disp_button_Num_Input(0);
+	Sort_num1=Input_compvalue(Coordinates);//Input_Set_Cov
+//	if(SaveData.Limit_Tab.Mode==0)
+		Sort_num1=Input_Set_Cov(&Sort_num1);
+//	else
+//	Sort_num1=Input_Set_CovPre(&Sort_num1);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num1;	
+
+}
 
 uint8_t Freq_Set_Num(Disp_Coordinates_Typedef *Coordinates)//∆µ¬ …Ë÷√
 {
@@ -5664,9 +5707,9 @@ void Set_daot(uint8_t *buff,uint8_t dot)
 
 uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 {
-	float value;
-	float data;
-	uint8_t i,j=0;
+	float value,secvalue,sechigh;
+	float data,secdata,seclow;
+	uint8_t i,j,k=0;
 	uint8_t num=9;
 	for(i=0;i<5;i++)
 	{
@@ -5679,9 +5722,31 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 	value=value*pow(1000,pt->all[0].Unit);
 	value/=(pow(10,pt->all[0].Dot));
 	
+	for(i=0;i<5;i++)
+	{
+		if(pt->all[1].buff[i]==' ')
+			secdata=0;
+		else
+			secdata=pt->all[1].buff[i];
+		secvalue+=(pow(10,4-i)*secdata);//¥”œ¬Œªª˙Ω” ’¿¥µƒ ˝æ›
+	}
+//	if(SaveData.Limit_Tab.Comp_Value[9].high.Unit == 9 && SaveData.Limit_Tab.Comp_Value[9].low.Unit == 9)
+//	{
+//		secvalue/=(pow(10,pt->all[1].Dot));
+//		sechigh = SaveData.Limit_Tab.Comp_Value[9].high.Num/(pow(10,SaveData.Limit_Tab.Comp_Value[9].high.Dot));
+//		seclow = SaveData.Limit_Tab.Comp_Value[9].low.Num/(pow(10,SaveData.Limit_Tab.Comp_Value[9].low.Dot));
+//	}else{
+		secvalue=secvalue*pow(1000,pt->all[1].Unit);
+		secvalue/=(pow(10,pt->all[1].Dot));
+		sechigh = SaveData.Limit_Tab.Comp_Value[9].high.Num/(pow(10,SaveData.Limit_Tab.Comp_Value[9].high.Dot));
+		seclow = SaveData.Limit_Tab.Comp_Value[9].low.Num/(pow(10,SaveData.Limit_Tab.Comp_Value[9].low.Dot));
+		sechigh=sechigh*pow(1000,SaveData.Limit_Tab.Comp_Value[9].high.Unit);
+		seclow=seclow*pow(1000,SaveData.Limit_Tab.Comp_Value[9].low.Unit);
+//	}
+	
 //	if(SaveData.Limit_Tab.Mode)//∞Ÿ∑÷±»±»Ωœ
 	{
-		for(i=0;i<9;i++)
+		for(i=0;i<8;i++)
 		{
 			if(SaveData.Limit_Tab.Comp_Value[i].low.Num!=0)
 			{
@@ -5689,7 +5754,7 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 				{
 					//Count_buff[10]++;
 					j=1;
-					
+					primcomp = 1;
 					//break;
 				}
 				else if(value<Comp_Testvalue.comp_lowvalue[i])//–°”⁄œ¬œﬁ º”∫œ∏Ò±Í÷æŒª
@@ -5698,7 +5763,7 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 					//Count_buff[10]++;
 					//break;
 					j=1;
-					
+					primcomp = 1;
 				}
 				else 
 				{
@@ -5707,6 +5772,7 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 					i=10;
 					
 					j=0;
+					primcomp = 0;
 				}
 			
 			
@@ -5714,7 +5780,35 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 		
 		
 		}
-		if(j==1)
+//		if(SaveData.Limit_Tab.Comp_Value[9].low.Num!=0)
+//		{
+			if(secvalue>sechigh)//¥Û”⁄…œœﬁ
+			{
+				//Count_buff[10]++;
+				j=1;
+				scedcomp = 1;
+				//break;
+			}
+			else if(secvalue<seclow)//–°”⁄œ¬œﬁ º”∫œ∏Ò±Í÷æŒª
+								//º∆ ˝
+			{
+				//Count_buff[10]++;
+				//break;
+				j=1;
+				scedcomp = 1;
+			}
+			else 
+			{
+				Count_buff[9]++;
+				num=i;
+				i=10;
+				scedcomp = 0;
+				j=0;
+			}
+		
+		
+//		}
+		if(primcomp==1 || scedcomp == 1)
 		{
 			Count_buff[10]++;
 			Comp_flag=1;
@@ -5748,7 +5842,7 @@ void Set_Compbcd_float(void)//∞—…Ë÷√±»Ωœ ˝æ›◊™ªªŒ™float ˝æ›  ∞—’‚∏ˆ ˝æ›”Î±Í≥∆÷µΩ
 {
 	uint8_t i;
 	float value;
-	for(i=0;i<9;i++)
+	for(i=0;i<8;i++)
 	{
 		Comp_Testvalue.comp_highvalue[i]=Inttofloat( &SaveData.Limit_Tab.Comp_Value[i].high);
 		Comp_Testvalue.comp_lowvalue[i]=Inttofloat( &SaveData.Limit_Tab.Comp_Value[i].low);
@@ -5760,7 +5854,7 @@ void Set_Compbcd_float(void)//∞—…Ë÷√±»Ωœ ˝æ›◊™ªªŒ™float ˝æ›  ∞—’‚∏ˆ ˝æ›”Î±Í≥∆÷µΩ
 	value=Inttofloat(&SaveData.Limit_Tab.Nom);
 	if(SaveData.Limit_Tab.Mode)//∞Ÿ∑÷±»±»Ωœ
 	{
-		for(i=0;i<9;i++)
+		for(i=0;i<8;i++)
 		{
 			Comp_Testvalue.comp_highvalue[i]=(100000+Comp_Testvalue.comp_highvalue[i] * 1000)*value;
 			Comp_Testvalue.comp_highvalue[i]/=100000;
@@ -5775,7 +5869,7 @@ void Set_Compbcd_float(void)//∞—…Ë÷√±»Ωœ ˝æ›◊™ªªŒ™float ˝æ›  ∞—’‚∏ˆ ˝æ›”Î±Í≥∆÷µΩ
 	else
 	{
 		
-		for(i=0;i<9;i++)
+		for(i=0;i<8;i++)
 		{
 			Comp_Testvalue.comp_highvalue[i]+=value;
 			Comp_Testvalue.comp_lowvalue[i]=fabs(value-Comp_Testvalue.comp_lowvalue[i]);

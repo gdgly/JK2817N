@@ -21,44 +21,48 @@ Target DLL:      Segger\JL2CM3.dll V2.99.29.0
 Dialog DLL:      TARMP1.DLL V1.26.0.0
  
 <h2>Project:</h2>
-F:\JK2817N-20190112\Project\project.uvprojx
+F:\JK2817N\Project\project.uvprojx
 Project File Date:  01/12/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Open1788'
 compiling test.c...
-..\User\Test\test.c(261): warning:  #175-D: subscript out of range
+..\User\Test\test.c(262): warning:  #175-D: subscript out of range
                       ComBuf3.send.buf[7+11]='F';
-..\User\Test\test.c(268): warning:  #175-D: subscript out of range
+..\User\Test\test.c(269): warning:  #175-D: subscript out of range
                       ComBuf3.send.buf[7+11]='P';
-..\User\Test\test.c(278): warning:  #175-D: subscript out of range
+..\User\Test\test.c(279): warning:  #175-D: subscript out of range
           ComBuf3.send.buf[7+12]=0XBF;
-..\User\Test\test.c(349): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
+..\User\Test\test.c(350): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
       GPIO_ClearInt(0, 1<<19);
-..\User\Test\test.c(286): warning:  #550-D: variable "Main_Second"  was set but never used
+..\User\Test\test.c(287): warning:  #550-D: variable "Main_Second"  was set but never used
         Main_Second_TypeDed Main_Second;//主参数和幅参赛的序号
-..\User\Test\test.c(289): warning:  #177-D: variable "i"  was declared but never referenced
+..\User\Test\test.c(290): warning:  #177-D: variable "i"  was declared but never referenced
       uint8_t page=1,i;
-..\User\Test\test.c(3176): warning:  #177-D: variable "Set_Time"  was declared but never referenced
+..\User\Test\test.c(3196): warning:  #177-D: variable "Set_Time"  was declared but never referenced
       RTC_TIME_Type Set_Time;
-..\User\Test\test.c(4096): warning:  #223-D: function "UARTPuts" declared implicitly
+..\User\Test\test.c(4116): warning:  #223-D: function "UARTPuts" declared implicitly
       UARTPuts( LPC_UART0, debugbuff);//发送校正命令
-..\User\Test\test.c(4079): warning:  #177-D: variable "sendnum"  was declared but never referenced
+..\User\Test\test.c(4099): warning:  #177-D: variable "sendnum"  was declared but never referenced
       uint8_t setupflag=0,sendnum;
-..\User\Test\test.c(4412): warning:  #177-D: variable "str"  was declared but never referenced
+..\User\Test\test.c(4432): warning:  #177-D: variable "str"  was declared but never referenced
         u8 str[(FRAME_LEN_MAX-FRAME_LEN_MIN)+1];//收发数据缓冲
-..\User\Test\test.c(5799): warning:  #550-D: variable "bytes_written"  was set but never used
+..\User\Test\test.c(5712): warning:  #550-D: variable "j"  was set but never used
+        uint8_t i,j,k=0;
+..\User\Test\test.c(5712): warning:  #177-D: variable "k"  was declared but never referenced
+        uint8_t i,j,k=0;
+..\User\Test\test.c(5893): warning:  #550-D: variable "bytes_written"  was set but never used
       uint32_t  bytes_written;
-..\User\Test\test.c(5833): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
+..\User\Test\test.c(5927): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
         GPIO_ClearInt(0, 1<<19);        
-..\User\Test\test.c(6319): warning:  #550-D: variable "password_flag"  was set but never used
+..\User\Test\test.c(6413): warning:  #550-D: variable "password_flag"  was set but never used
       char password_flag=0;
-..\User\Test\test.c: 13 warnings, 0 errors
+..\User\Test\test.c: 15 warnings, 0 errors
 linking...
-Program Size: Code=80276 RO-data=425644 RW-data=284 ZI-data=18204  
+Program Size: Code=81456 RO-data=425640 RW-data=284 ZI-data=18204  
 FromELF: creating hex file...
-".\Output\project.axf" - 0 Error(s), 13 Warning(s).
+".\Output\project.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Software Packages used:</h2>
 

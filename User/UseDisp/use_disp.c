@@ -14,7 +14,7 @@
 #include "rtc.h"
 #include "lpc177x_8x_rtc.h"
 
-
+extern u8 primcomp,scedcomp;
 uint8_t CorrectionflagC=0,CorrectionflagR=0,Correc_successflag=0;
 const uint8_t Num_1[][9]=
 {"1","2","3","4","5","6","7","8","9"};
@@ -914,10 +914,11 @@ const uint8_t User_LimitList_Item2[][3+1]=
 	{" 7"},
 	{" 8"},
 	{" 9"},
-	{"2nd"}
+//	{"2nd"}
 
 
 };
+
 const uint8_t User_LimitScan_Item2[][3+1]=
 {
 	{"No."},
@@ -983,15 +984,14 @@ const uint8_t Set_Unit[][5+1]=
 	{"*1"},
 	{"k"},
 	{"M"},
-	
-	{""},
+//	{"input"},
 	{"back"},
 
 
 
 };
 const uint8_t Disp_Unit[][2+1]=
-{"p","n","u","m"," ","k","M"};
+{"p","n","u","m"," ","k","M","G",""};
 
 const uint8_t Disp_Range_Main_NUm[]={0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,3,3,3,2,2,1,1};
 const uint8_t Disp_Range_Main_Disp[][2+1]=
@@ -1116,6 +1116,8 @@ void Disp_button_Num_Input(uint8_t page)
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+14, BUTTOM_Y_VALUE, Set_Unit[i+5],  0);
 			else if(i==0)
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+24, BUTTOM_Y_VALUE, Set_Unit[i+5],  0);
+			else if(i==3)
+				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+10, BUTTOM_Y_VALUE, Set_Unit[i+5],  0);
 			else
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+29, BUTTOM_Y_VALUE, Set_Unit[i+5],  0);
 		}
@@ -3802,7 +3804,7 @@ void Disp_LimitSEt_value(Button_Page_Typedef* Button_Page)
 		
 	LCD_DrawRect( LIST2-22, FIRSTLINE+SPACE1-4,SELECT_2END-130 , FIRSTLINE+SPACE1*2-8 , Colour.black ) ;//SPACE1
 	WriteString_16(LIST2-21, FIRSTLINE+SPACE1-4, Switch_Value[SaveData.Limit_Tab.Comp],  1);
-	for(i=6;i<16;i++)
+	for(i=6;i<15;i++)
 	{
 		//SaveData.Limit_Tab.Comp_Value[Button_Page.index-6].low
 		if(i==Button_Page->index)
@@ -3829,7 +3831,7 @@ void Disp_LimitSEt_value(Button_Page_Typedef* Button_Page)
 		else
 		WriteString_12(LIST2-90, 76+(i-6)*15, "------",  1);	
 	}
-	for(i=16;i<26;i++)
+	for(i=16;i<25;i++)
 	{
 		
 		if(i==Button_Page->index)
@@ -3854,8 +3856,44 @@ void Disp_LimitSEt_value(Button_Page_Typedef* Button_Page)
 		else
 			WriteString_12(LIST2+80, 76+(i-16)*15, "------",  1);
 	}
-
+//副参数分选
+	if(Button_Page->index == 15)
+			Colour.black=LCD_COLOR_SELECT;
+		else
+			Colour.black=LCD_COLOR_TEST_BACK;
+	LCD_DrawRect( LIST2-90-12, 76+(15-6)*15,LIST2-20 , 77+(15-6)*15+15 , Colour.black ) ;
+//	if(SaveData.Limit_Tab.Comp_Value[15-6].low.Num!=0)
+//	{
+		Hex_Format(SaveData.Limit_Tab.Comp_Value[15-6].low.Num , 
+		SaveData.Limit_Tab.Comp_Value[15-6].low.Dot , 5 , 0);//加单位
 		
+//			WriteString_12(LIST2-90-8, 76+(i-6)*15, "-",  1);
+		WriteString_12(LIST2-90, 76+(15-6)*15, DispBuf,  1);//显示标称值  后面要接着显示单位
+		WriteString_12(LIST2-42, 76+(15-6)*15, 
+		Disp_Unit[SaveData.Limit_Tab.Comp_Value[15-6].low.Unit],  1);
+		//WriteString_16(LIST1+70, FIRSTLINE+SPACE1, Switch_Value[SaveData.Limit_Tab.Param],  0);
+		//WriteString_16(LIST2+34, FIRSTLINE, Disp_Unit[SaveData.Limit_Tab.Nom.Unit],  1);
+//	}
+//	else
+//	WriteString_12(LIST2-90, 76+(15-6)*15, "------",  1);
+	
+	if(Button_Page->index == 25)
+			Colour.black=LCD_COLOR_SELECT;
+		else
+			Colour.black=LCD_COLOR_TEST_BACK;
+	LCD_DrawRect( LIST2+58, 76+(25-16)*15,LIST2+70+70 , 77+(25-16)*15+15, Colour.black ) ;
+//	if(SaveData.Limit_Tab.Comp_Value[25-16].high.Num !=0)
+//	{
+		Hex_Format(SaveData.Limit_Tab.Comp_Value[25-16].high.Num ,
+			SaveData.Limit_Tab.Comp_Value[25-16].high.Dot , 5 , 0);//加单位
+		
+		WriteString_12(LIST2+80, 76+(25-16)*15, DispBuf,  0);//显示标称值  后面要接着显示单位
+		WriteString_12(LIST2+70+58, 76+(25-16)*15, 
+		Disp_Unit[SaveData.Limit_Tab.Comp_Value[25-16].high.Unit],  1);
+//	}
+//	else
+//		WriteString_12(LIST2+80, 76+(25-16)*15, "------",  1);
+	
 //	LCD_DrawRect( LIST2+88, FIRSTLINE+SPACE1*2-2,SELECT_2END , FIRSTLINE+SPACE1*3-4 , Colour.black ) ;//SPACE1
 //	WriteString_16(LIST2+88, FIRSTLINE+SPACE1*2, User_Comp[SaveData.Main_Func.Bias],  1);
 	Disp_Fastbutton();
@@ -5365,7 +5403,7 @@ void Disp_LimitList_Item(void)			//极限列表设置
 		}
 	}
 	
-	for(i=0;i<11;i++)			//
+	for(i=0;i<10;i++)			//
 	{
 		if(i>3&&i<8)
 		 	Colour.black=LCD_COLOR_TEST_MID;
@@ -5373,6 +5411,8 @@ void Disp_LimitList_Item(void)			//极限列表设置
 			Colour.black=LCD_COLOR_TEST_BACK;
 		WriteString_12(LIST1, 65+i*15-2, User_LimitList_Item2[i],  0);
 	}
+	WriteString_12(LIST1, 65+10*15-2, RangeDisp_Second[SaveData.Main_Func.Param.test],  0);
+
 	WriteString_12(160, 65-2,"LOW",  0);
 	
 		
@@ -6863,16 +6903,40 @@ void Disp_Testvalue(void)
 {
 //	Test_Dispvalue.Mainvalue.Dot=3;
 //	Hex_Format(timer0_counter, Test_Dispvalue.Mainvalue.Dot , 5 , 0);//显示主参数
-	WriteString_Big(180,92 ,Test_Dispvalue.Main_valuebuff);
-	
-//	LCD_ShowFontCN_40_55(60,92,40,55,(uint8_t*)_C);
-//	WriteString_Big((uint8_t)Set_Unit[Test_Dispvalue.Mainvalue.Unit]);
-	//显示单位
-	
-//	Hex_Format(Test_Dispvalue.Secondvalue.Num , Test_Dispvalue.Secondvalue.Dot , 5 , 0);//显示辅助参数
-	WriteString_Big(180,92+55 ,Test_Dispvalue.Secondvaluebuff);
-	
-	
+	if(SaveData.Limit_Tab.Comp)
+    {
+		if(primcomp == 1)
+		{
+			Colour.Fword = Red;
+		}else{
+			Colour.Fword = LCD_COLOR_GREEN;
+		}
+		WriteString_Big(180,92 ,Test_Dispvalue.Main_valuebuff);
+		
+	//	LCD_ShowFontCN_40_55(60,92,40,55,(uint8_t*)_C);
+	//	WriteString_Big((uint8_t)Set_Unit[Test_Dispvalue.Mainvalue.Unit]);
+		//显示单位
+		
+	//	Hex_Format(Test_Dispvalue.Secondvalue.Num , Test_Dispvalue.Secondvalue.Dot , 5 , 0);//显示辅助参数
+		if(scedcomp == 1)
+		{
+			Colour.Fword = Red;
+		}else{
+			Colour.Fword = LCD_COLOR_GREEN;
+		}
+		WriteString_Big(180,92+55 ,Test_Dispvalue.Secondvaluebuff);
+	}else{
+		Colour.Fword = LCD_COLOR_WHITE;
+		WriteString_Big(180,92 ,Test_Dispvalue.Main_valuebuff);
+		
+	//	LCD_ShowFontCN_40_55(60,92,40,55,(uint8_t*)_C);
+	//	WriteString_Big((uint8_t)Set_Unit[Test_Dispvalue.Mainvalue.Unit]);
+		//显示单位
+		
+	//	Hex_Format(Test_Dispvalue.Secondvalue.Num , Test_Dispvalue.Secondvalue.Dot , 5 , 0);//显示辅助参数
+		WriteString_Big(180,92+55 ,Test_Dispvalue.Secondvaluebuff);
+	}
+	Colour.Fword = LCD_COLOR_WHITE;
 	Colour.black=LCD_COLOR_TEST_BACK;
 	if(SaveData.Main_Func.V_i==0)
 	{
