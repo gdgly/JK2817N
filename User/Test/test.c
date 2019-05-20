@@ -5739,8 +5739,8 @@ void Set_daot(uint8_t *buff,uint8_t dot)
 
 uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 {
-	float value,secvalue,sechigh;
-	float data,secdata,seclow;
+	static float value,secvalue,sechigh;
+	static float data,secdata,seclow;
 	uint8_t i,j,k=0;
 	uint8_t num=9;
 	for(i=0;i<5;i++)
@@ -5852,6 +5852,8 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 	
 	
 	}
+	value = 0;
+	secvalue = 0;
 //	else
 //	{
 //		
