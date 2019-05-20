@@ -232,13 +232,16 @@ void Send_T0_USB(void)
     for(i=0;i<6;i++)
 		{
 			*(UserBuffer+i)=Test_Dispvalue.Main_valuebuff[i];
-			*(UserBuffer+9+i)=Test_Dispvalue.Secondvaluebuff[i];
+			*(UserBuffer+10+i)=Test_Dispvalue.Secondvaluebuff[i];
             ComBuf3.send.buf[i+1]=Test_Dispvalue.Main_valuebuff[i];
             ComBuf3.send.buf[i+9]=Test_Dispvalue.Secondvaluebuff[i];
             
 		
 		}
-		*(UserBuffer+8)='	';
+		*(UserBuffer+8)=' ';
+		*(UserBuffer+9)='	';
+		*(UserBuffer+20)=' ';
+		*(UserBuffer+21)='	';
 		*(UserBuffer+6)=(uint8_t)Disp_Unit1[Test_Dispvalue.Unit[0]];
 		*(UserBuffer+7)=Disp_Range_Main_Disp[DISP_UnitMain[SaveData.Main_Func.Param.test]][0];
         ComBuf3.send.buf[7]=(uint8_t)Disp_Unit1[Test_Dispvalue.Unit[0]];
@@ -246,36 +249,63 @@ void Send_T0_USB(void)
         
 		*(UserBuffer+8)=Disp_Range_Main_Disp[DISP_UnitMain[SaveData.Main_Func.Param.test]][1];
 		
-		*(UserBuffer+8+8)=(uint8_t)Disp_Unit1[Test_Dispvalue.Unit[1]];
+		*(UserBuffer+8+9)=(uint8_t)Disp_Unit1[Test_Dispvalue.Unit[1]];
         ComBuf3.send.buf[7+9]=Test_Dispvalue.Unit[1];
 		
-		*(UserBuffer+8+9)=Disp_Range_Main_Disp[DISP_UnitSecond[SaveData.Main_Func.Param.test]][0];
-		*(UserBuffer+8+10)=Disp_Range_Main_Disp[DISP_UnitSecond[SaveData.Main_Func.Param.test]][1];
+		*(UserBuffer+8+10)=Disp_Range_Main_Disp[DISP_UnitSecond[SaveData.Main_Func.Param.test]][0];
+		*(UserBuffer+8+11)=Disp_Range_Main_Disp[DISP_UnitSecond[SaveData.Main_Func.Param.test]][1];
         ComBuf3.send.buf[7+10]=DISP_UnitSecond[SaveData.Main_Func.Param.test];
 //		*(UserBuffer+8+8)=DISP_UnitMain[SaveData.Main_Func.Param.test];
 		
         if(SaveData.Limit_Tab.Comp)
         {
-            if(Comp_flag)
+            if(primcomp)
             {
-                    *(UserBuffer+19)='F';
+					
+                    *(UserBuffer+22)='F';
+                    ComBuf3.send.buf[7+11]='F';
+					*(UserBuffer+23)=' ';
+					*(UserBuffer+24)='	';
+            }
+			else
+				
+			{
+				*(UserBuffer+22)='P';
+				ComBuf3.send.buf[7+11]='P';
+				*(UserBuffer+23)=' ';
+				*(UserBuffer+24)='	';
+				
+			}
+			 if(scedcomp)
+            {
+					
+                    *(UserBuffer+25)='F';
+					*(UserBuffer+26)=' ';
+					*(UserBuffer+27)='	';
                     ComBuf3.send.buf[7+11]='F';
                 
             }
-                else
-                    
-                {
-                    *(UserBuffer+19)='P';
-                    ComBuf3.send.buf[7+11]='P';
-                    
-                }
+			else
+				
+			{
+				*(UserBuffer+25)='P';
+				*(UserBuffer+26)=' ';
+				*(UserBuffer+27)='	';
+				ComBuf3.send.buf[7+11]='P';
+				
+			}
         }
-        else
-           *(UserBuffer+19)='	'; 
-		*(UserBuffer+20)='	';
+        else{
+			*(UserBuffer+22)=' ';
+			*(UserBuffer+23)=' ';
+			*(UserBuffer+24)='	';
+			*(UserBuffer+25)=' ';
+			*(UserBuffer+26)=' ';
+			*(UserBuffer+27)='	';
+		}
 		
-		*(UserBuffer+21)='\r';
-		*(UserBuffer+22)='\n';
+		*(UserBuffer+28)='\r';
+		*(UserBuffer+29)='\n';
         ComBuf3.send.buf[7+12]=0XBF;
 }	
 //测试程序
@@ -599,12 +629,7 @@ void Test_Process(void)
     //			else
     //				*(UserBuffer+19)='P';
                 
-             Send_T0_USB();//往U盘里面写数据  
-             if(SaveData.Main_Func.buad)
-                 Send_Uart3((uint8_t *) ComBuf3.send.buf);
-                 
-            if(Saveeeprom.Sys_set.U_flag)
-                Write_Usbdata ( UserBuffer,23);                
+                             
                 
             }
             else
@@ -613,6 +638,13 @@ void Test_Process(void)
             
             
             }
+			Send_T0_USB();//往U盘里面写数据  
+             if(SaveData.Main_Func.buad)
+                 Send_Uart3((uint8_t *) ComBuf3.send.buf);
+                 
+            if(Saveeeprom.Sys_set.U_flag)
+                Write_Usbdata ( UserBuffer,29);
+			
 			Disp_Testvalue();			//显示测量值
             if(TrigFlag==1)
                 TrigFlag=2;
@@ -1005,7 +1037,7 @@ void Test_Process(void)
 						if (rc == OK) {
 							
 							//Write_Usbdata ( "主参数		副参数		分选\r\n" ,22);	
-							Write_Usbdata ( "Main P		Seco P		Part\r\n" ,22);	
+							Write_Usbdata ( "Main P	  Seco P	MPart	SPart\r\n" ,29);	
 
 						}							
 			//            if (rc == OK) {

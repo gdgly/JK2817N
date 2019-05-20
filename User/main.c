@@ -198,7 +198,7 @@ int main(void)
 						rc = MS_Init( &blkSize, &numBlks, inquiryResult );
 					if (rc == OK) {
 						rc = FAT_Init();   /* Initialize the FAT16 file system */    
-						Write_Usbdata ( "主参数		副参数		分选\r\n" ,22);	
+						Write_Usbdata ( "Main P	  Seco P	MPart	SPart\r\n" ,29);	
 						usb_oenflag=1;						
 			
 						} 

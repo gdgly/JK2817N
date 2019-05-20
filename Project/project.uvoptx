@@ -119,6 +119,10 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>PWSTATINFO</Key>
           <Name>200,50,700</Name>
         </SetRegEntry>
@@ -169,7 +173,7 @@
           <Type>0</Type>
           <LineNumber>5530</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>50038</Address>
+          <Address>49864</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -183,34 +187,18 @@
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>1073</LineNumber>
+          <LineNumber>5562</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>6436</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\User\UseDisp\use_disp.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\User\Test\test.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\project\../User/UseDisp/use_disp.c\1073</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>1129</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>6752</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\User\UseDisp\use_disp.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\project\../User/UseDisp/use_disp.c\1129</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -368,6 +356,11 @@
           <count>30</count>
           <WinNumber>1</WinNumber>
           <ItemText>Sort_set,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>31</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ComBuf3.send.buf</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
