@@ -27,46 +27,18 @@ Project File Date:  01/12/2019
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Open1788'
-compiling test.c...
-..\User\Test\test.c(266): warning:  #175-D: subscript out of range
-                      ComBuf3.send.buf[7+11]='F';
-..\User\Test\test.c(274): warning:  #175-D: subscript out of range
-                                ComBuf3.send.buf[7+11]='P';
-..\User\Test\test.c(285): warning:  #175-D: subscript out of range
-                      ComBuf3.send.buf[7+11]='F';
-..\User\Test\test.c(294): warning:  #175-D: subscript out of range
-                                ComBuf3.send.buf[7+11]='P';
-..\User\Test\test.c(309): warning:  #175-D: subscript out of range
-          ComBuf3.send.buf[7+12]=0XBF;
-..\User\Test\test.c(380): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
-      GPIO_ClearInt(0, 1<<19);
-..\User\Test\test.c(317): warning:  #550-D: variable "Main_Second"  was set but never used
-        Main_Second_TypeDed Main_Second;//主参数和幅参赛的序号
-..\User\Test\test.c(320): warning:  #177-D: variable "i"  was declared but never referenced
-      uint8_t page=1,i;
-..\User\Test\test.c(3228): warning:  #177-D: variable "Set_Time"  was declared but never referenced
-      RTC_TIME_Type Set_Time;
-..\User\Test\test.c(4148): warning:  #223-D: function "UARTPuts" declared implicitly
-      UARTPuts( LPC_UART0, debugbuff);//发送校正命令
-..\User\Test\test.c(4131): warning:  #177-D: variable "sendnum"  was declared but never referenced
-      uint8_t setupflag=0,sendnum;
-..\User\Test\test.c(4464): warning:  #177-D: variable "str"  was declared but never referenced
-        u8 str[(FRAME_LEN_MAX-FRAME_LEN_MIN)+1];//收发数据缓冲
-..\User\Test\test.c(5744): warning:  #550-D: variable "j"  was set but never used
-        uint8_t i,j,k=0;
-..\User\Test\test.c(5744): warning:  #177-D: variable "k"  was declared but never referenced
-        uint8_t i,j,k=0;
-..\User\Test\test.c(5927): warning:  #550-D: variable "bytes_written"  was set but never used
-      uint32_t  bytes_written;
-..\User\Test\test.c(5961): warning:  #223-D: function "GPIO_ClearInt" declared implicitly
-        GPIO_ClearInt(0, 1<<19);        
-..\User\Test\test.c(6447): warning:  #550-D: variable "password_flag"  was set but never used
-      char password_flag=0;
-..\User\Test\test.c: 17 warnings, 0 errors
+compiling use_disp.c...
+..\User\UseDisp\use_disp.c(5027): warning:  #177-D: variable "i"  was declared but never referenced
+        uint32_t i;
+..\User\UseDisp\use_disp.c(7180): warning:  #177-D: variable "i"  was declared but never referenced
+        uint8_t i=3;            
+..\User\UseDisp\use_disp.c(7232): warning:  #177-D: variable "i"  was declared but never referenced
+        uint8_t i=5;
+..\User\UseDisp\use_disp.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=81804 RO-data=425636 RW-data=308 ZI-data=18204  
+Program Size: Code=81892 RO-data=425636 RW-data=308 ZI-data=18204  
 FromELF: creating hex file...
-".\Output\project.axf" - 0 Error(s), 17 Warning(s).
+".\Output\project.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -80,7 +52,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\LPC1700_DFP\2.5.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

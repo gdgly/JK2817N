@@ -3210,12 +3210,23 @@ void DispSet_value(Button_Page_Typedef* Button_Page)
 		case 6:		//讯响功能
 			Colour.Fword=White;
 			Colour.black=LCD_COLOR_TEST_BUTON;
-			for(i=0;i<3;i++)
+			if(SaveData.Sys_Setup.Language==1)
 			{
-				if(i==2)
-				     WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+10, BUTTOM_Y_VALUE, Setup_Beep[i],  0);
-				else
-					 WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+18, BUTTOM_Y_VALUE, Setup_Beep[i],  0);
+				for(i=0;i<3;i++)
+				{
+					if(i==2)
+						 WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+10, BUTTOM_Y_VALUE, Setup_Beep_E[i],  0);
+					else
+						 WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+18, BUTTOM_Y_VALUE, Setup_Beep_E[i],  0);
+				}
+			}else{
+				for(i=0;i<3;i++)
+				{
+					if(i==2)
+						 WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+10, BUTTOM_Y_VALUE, Setup_Beep[i],  0);
+					else
+						 WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE+18, BUTTOM_Y_VALUE, Setup_Beep[i],  0);
+				}
 			}
 			break;
 		case 7:	//量程
