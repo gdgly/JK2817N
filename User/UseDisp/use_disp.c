@@ -277,9 +277,9 @@ const uint8_t User_Freq[][10+1]=
 };
 const uint8_t Setup_Beep_E[][6+1]=
 {
-	"Shut",
-	"Good",
-	"NoGood",
+	"OFF",
+	"PASS",
+	"FAIL",
 
 };
 const uint8_t Setup_Beep[][6+1]=
@@ -694,7 +694,7 @@ const uint8_t	Set_testitem_E[][9+1]=
 	{"Rsou    :"},
 //	{"TRIG DLY:"},
 	//{"STEP DLY:"},
-	{"DEV A   :"},
+	{"ALARM   :"},
 	{"RANGE   :"},
  //   {"BIAS    :"},
 	{"SPEED   :"},
