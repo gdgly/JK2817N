@@ -387,8 +387,8 @@ const uint8_t Limit_Scan_Page[][6+1]=
 const uint8_t Sys_Bais_Value[][6+1]=
 {
 	{"INT"},
-	{"OUT"}
-
+	{"OUT"},
+	{"NONE"}
 
 };
 const uint8_t Sys_Addr_value[][6+1]=
@@ -398,13 +398,14 @@ const uint8_t Sys_Addr_value[][6+1]=
 	{"USBTMC"},
 	{"USBCDC"},
 	{"RS485"},
-
+	{"NONE"}
 
 };
 const uint8_t Switch_Value[][4+1]=
 {
 	{"OFF"},
-	{"ON"}
+	{"ON"},
+	{"NONE"}
 
 };
 const uint8_t CompButton_Tip[][7+1]=  //频率选择时候的下面的提示符号
@@ -972,7 +973,7 @@ const uint8_t Sys_Buard_Value[][6+1]=
 	{"38400"},
 	{"56000"},
 	{"115200"},
-
+    {"NONE"},
 };
 const uint8_t Set_Unit[][5+1]=
 {
@@ -4661,7 +4662,7 @@ void Disp_Sys_value(Button_Page_Typedef* Button_Page)
 	}
 		
 	LCD_DrawRect( LIST2+94, FIRSTLINE,SELECT_2END , FIRSTLINE+SPACE1*1-4 , Colour.black ) ;//SPACE1
-	WriteString_16(LIST2+95, FIRSTLINE+2, Sys_Buard_Value[Saveeeprom.Sys_set.buard],  0);
+	WriteString_16(LIST2+95, FIRSTLINE+2, Sys_Buard_Value[7],  0);
 	
 //偏置源
 	
@@ -4677,7 +4678,7 @@ void Disp_Sys_value(Button_Page_Typedef* Button_Page)
 	}
 		
 	LCD_DrawRect( LIST2+94, FIRSTLINE+SPACE1*1,SELECT_2END , FIRSTLINE+SPACE1*2-4 , Colour.black ) ;//SPACE1
-	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*1+2, Sys_Bais_Value[SaveData.Sys_Setup.Bias],  1);	
+	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*1+2, Sys_Bais_Value[2],  1);	
 	
 	//总线方式
 	
@@ -4694,7 +4695,7 @@ void Disp_Sys_value(Button_Page_Typedef* Button_Page)
 		
 	LCD_DrawRect( LIST2+94, FIRSTLINE+SPACE1*2,SELECT_2END , FIRSTLINE+SPACE1*3-4 , Colour.black ) ;//SPACE1
 	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*2+2, Sys_Addr_value\
-				[SaveData.Sys_Setup.Bus_Mode],  1);	
+				[5],  1);	
 	
 //GPIB地址
 	
@@ -4711,7 +4712,7 @@ void Disp_Sys_value(Button_Page_Typedef* Button_Page)
 		
 	LCD_DrawRect( LIST2+94, FIRSTLINE+SPACE1*3,SELECT_2END , FIRSTLINE+SPACE1*4-4 , Colour.black ) ;//SPACE1
 	sprintf((char *)DispBuf,"%2d",SaveData.Sys_Setup.GP_Addr);
-	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*3+2,DispBuf ,  1);	
+	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*3+2,"NONE" ,  1);	
 	
 
 //只讲
@@ -4729,7 +4730,7 @@ void Disp_Sys_value(Button_Page_Typedef* Button_Page)
 		
 	LCD_DrawRect( LIST2+94, FIRSTLINE+SPACE1*4,SELECT_2END , FIRSTLINE+SPACE1*5-4 , Colour.black ) ;//SPACE1
 	WriteString_16(LIST2+95, FIRSTLINE+SPACE1*4+2, Switch_Value\
-				[SaveData.Sys_Setup.Talk_Only],  1);
+				[2],  1);
 
 
 //时

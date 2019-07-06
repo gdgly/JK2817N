@@ -329,6 +329,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>ComBuf3.send.buf</ItemText>
         </Ww>
+        <Ww>
+          <count>32</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Comp_Testvalue.comp_highvalue</ItemText>
+        </Ww>
+        <Ww>
+          <count>33</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Comp_Testvalue.comp_lowvalue</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

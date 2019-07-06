@@ -3716,9 +3716,9 @@ void Use_SysSetProcess(void)
 							Button_Page.index-=6;
                         else if(Button_Page.index==1)
                             Button_Page.index=16;
-                            
-                        else
-                            Button_Page.index+=7;
+//                            
+//                        else
+//                            Button_Page.index+=7;
                             
 				    }
 				break;
@@ -3727,7 +3727,7 @@ void Use_SysSetProcess(void)
 					if(Button_Page.page==0)
 					{
 						if(Button_Page.index<6)
-							Button_Page.index+=8;
+							Button_Page.index = 14;
 						else if(Button_Page.index<8)	//Button_Page.index==7||Button_Page.index==8
 							Button_Page.index+=1;
 						else if(Button_Page.index==14||Button_Page.index==15)
@@ -3737,7 +3737,7 @@ void Use_SysSetProcess(void)
                         else if(Button_Page.index==16)
                             Button_Page.index=1;
                         else
-                            Button_Page.index-=7;
+                            Button_Page.index=1;
 					}
 				break;
 				case Key_DOWN:
@@ -3746,8 +3746,14 @@ void Use_SysSetProcess(void)
 					{
 						if(Button_Page.index>15)
 							Button_Page.index=0;
-						else
+						else if(Button_Page.index<8)
 							Button_Page.index++;
+						else if(Button_Page.index==14)
+							Button_Page.index++;
+						else if(Button_Page.index==15)
+							Button_Page.index++;
+						else
+							Button_Page.index = 14;
 					}
 					else if(Button_Page.page==1)
 					{
@@ -3771,8 +3777,14 @@ void Use_SysSetProcess(void)
 					{
 						if(Button_Page.index<1)
 							Button_Page.index=16;
-						else
+						else if(Button_Page.index<9)
 							Button_Page.index--;
+						else if(Button_Page.index==16)
+							Button_Page.index--;
+						else if(Button_Page.index==15)
+							Button_Page.index--;
+						else if(Button_Page.index==14)
+							Button_Page.index=8;
 				    }
 					else if(Button_Page.page==1)
 					{
@@ -5778,7 +5790,7 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 	
 //	if(SaveData.Limit_Tab.Mode)//°Ù·Ö±È±È½Ï
 	{
-		for(i=0;i<8;i++)
+		for(i=0;i<9;i++)
 		{
 			if(SaveData.Limit_Tab.Comp_Value[i].low.Num!=0)
 			{
@@ -5819,6 +5831,7 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 				//Count_buff[10]++;
 				j=1;
 				scedcomp = 1;
+				num = 9;
 				//break;
 			}
 			else if(secvalue<seclow)//Ð¡ÓÚÏÂÏÞ ¼ÓºÏ¸ñ±êÖ¾Î»
@@ -5828,12 +5841,13 @@ uint8_t Test_Comp(All_Compvalue_Typedef *pt)
 				//break;
 				j=1;
 				scedcomp = 1;
+				num = 9;
 			}
 			else 
 			{
-				Count_buff[9]++;
-				num=i;
-				i=10;
+//				Count_buff[9]++;
+//				num=i;
+//				i=10;
 				scedcomp = 0;
 				j=0;
 			}
@@ -5876,7 +5890,7 @@ void Set_Compbcd_float(void)//°ÑÉèÖÃ±È½ÏÊý¾Ý×ª»»ÎªfloatÊý¾Ý  °ÑÕâ¸öÊý¾ÝÓë±ê³ÆÖµ½
 {
 	uint8_t i;
 	float value;
-	for(i=0;i<8;i++)
+	for(i=0;i<9;i++)
 	{
 		Comp_Testvalue.comp_highvalue[i]=Inttofloat( &SaveData.Limit_Tab.Comp_Value[i].high);
 		Comp_Testvalue.comp_lowvalue[i]=Inttofloat( &SaveData.Limit_Tab.Comp_Value[i].low);
@@ -5888,7 +5902,7 @@ void Set_Compbcd_float(void)//°ÑÉèÖÃ±È½ÏÊý¾Ý×ª»»ÎªfloatÊý¾Ý  °ÑÕâ¸öÊý¾ÝÓë±ê³ÆÖµ½
 	value=Inttofloat(&SaveData.Limit_Tab.Nom);
 	if(SaveData.Limit_Tab.Mode)//°Ù·Ö±È±È½Ï
 	{
-		for(i=0;i<8;i++)
+		for(i=0;i<9;i++)
 		{
 			Comp_Testvalue.comp_highvalue[i]=(100000+Comp_Testvalue.comp_highvalue[i] * 1000)*value;
 			Comp_Testvalue.comp_highvalue[i]/=100000;
@@ -5903,7 +5917,7 @@ void Set_Compbcd_float(void)//°ÑÉèÖÃ±È½ÏÊý¾Ý×ª»»ÎªfloatÊý¾Ý  °ÑÕâ¸öÊý¾ÝÓë±ê³ÆÖµ½
 	else
 	{
 		
-		for(i=0;i<8;i++)
+		for(i=0;i<9;i++)
 		{
 			Comp_Testvalue.comp_highvalue[i]+=value;
 			Comp_Testvalue.comp_lowvalue[i]=fabs(value-Comp_Testvalue.comp_lowvalue[i]);
